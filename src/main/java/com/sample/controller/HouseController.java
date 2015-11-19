@@ -88,7 +88,9 @@ public class HouseController {
 
 	}
 
-	@RequestMapping(value = "/house", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/house", 
+			       method = RequestMethod.PUT, 
+			       consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateHouse(
 			@RequestBody(required = true) String jsonString) {
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -103,7 +105,6 @@ public class HouseController {
 		} catch (JsonParseException e) {
 			log.error("JsonParseException: ", e);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			log.error("JsonMappingException: ", e);
 		} catch (IOException e) {
 			log.error("IOException: ", e);
@@ -121,6 +122,7 @@ public class HouseController {
 				objectMapper.getTypeFactory().constructCollectionType(
 						List.class, Room.class));
 		if (CollectionUtils.isNotEmpty(rooms)) {
+			//TODO:Fix Update
 			hse = new House(rooms);
 			if(hse.getNumOfRooms() > 0){
 				hse.setId(rooms.get(0).getHouse().getId());
