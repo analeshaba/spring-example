@@ -1,4 +1,4 @@
-package com.uptake.service;
+package com.sample.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +14,16 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.uptake.model.House;
-import com.uptake.model.Room;
-import com.uptake.model.RoomType;
-import com.uptake.repository.HouseRespository;
+import com.sample.model.House;
+import com.sample.model.Room;
+import com.sample.model.RoomType;
+import com.sample.repository.HouseRespository;
 
 @Configuration
 @EnableAutoConfiguration
-@EntityScan(basePackages = {"com.uptake.model"})
-@EnableJpaRepositories(basePackages = {"com.uptake.repository"})
-@ComponentScan(basePackages = {"com.uptake.controller","com.uptake.config"})
+@EntityScan(basePackages = {"com.sample.model"})
+@EnableJpaRepositories(basePackages = {"com.sample.repository"})
+@ComponentScan(basePackages = {"com.sample.controller","com.sample.config"})
 public class HouseApplication {
 	private static final Logger log = LoggerFactory.getLogger(HouseApplication.class);
 	   public static void main(String[] args) {
@@ -37,31 +36,36 @@ public class HouseApplication {
 			     List<Room> rooms = new ArrayList<Room>();
 				 rooms.add(new Room(1,1,1,RoomType.BATHROOM));
 				 rooms.add(new Room(2,2,2,RoomType.KITCHEN));
-
-//			   	 rooms.add(new Room(6,12,1));
-//			   	 rooms.add(new Room(10,12.45,2));
-//			   	 rooms.add(new Room(11,12.45,1));
 				 House hse = new House(rooms);
-//				 ObjectMapper mapper = new ObjectMapper();
-//				 mapper.writeValue(System.out, rooms);
 				 repository.save(hse );
 				 
 			     rooms = new ArrayList<Room>();
 			   	 rooms.add(new Room(10,12.45,2,RoomType.BATHROOM));
 			   	 rooms.add(new Room(11,12.45,1, RoomType.BEDROOM));
-				  hse = new House(rooms);
+				 hse = new House(rooms);
+				 repository.save(hse );
 			
+			     rooms = new ArrayList<Room>();
+			   	 rooms.add(new Room(10,12.45,2,RoomType.BATHROOM));
+			   	 rooms.add(new Room(11,12.45,1, RoomType.BEDROOM));
+				 hse = new House(rooms);
+				 repository.save(hse );
+				 
+			     rooms = new ArrayList<Room>();
+			   	 rooms.add(new Room(10,12.45,2,RoomType.HALLWAY));
+			   	 rooms.add(new Room(11,12.45,1, RoomType.LAUNDRY));
+				 rooms.add(new Room(10,12.45,2,RoomType.BATHROOM));
+			   	 rooms.add(new Room(11,12.45,1, RoomType.BEDROOM));
+				 hse = new House(rooms);
 				 repository.save(hse);
 				
-				log.info("House found with findAll():");
-				log.info("-------------------------------");
+				log.debug("Demo Data Loaded");
+				log.debug("-------------------------------");
 				for (House n : repository.findAll()) {
 					log.info(n.toString());
 				}
 				
-				log.info("House found with by Id:");
-				log.info("-------------------------------");
-				log.info(repository.findOne(2L).toString());
+
 			};
 	   }
 }

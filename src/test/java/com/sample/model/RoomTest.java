@@ -1,9 +1,12 @@
-package com.uptake.model;
+package com.sample.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+
+import com.sample.model.Room;
+import com.sample.model.RoomType;
 
 public class RoomTest {
 

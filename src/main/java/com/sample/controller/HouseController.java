@@ -1,8 +1,9 @@
-package com.uptake.controller;
+package com.sample.controller;
 
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.h2.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +18,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Iterables;
-import com.uptake.model.House;
-import com.uptake.model.Room;
-import com.uptake.repository.HouseRespository;
+import com.sample.model.House;
+import com.sample.model.Room;
+import com.sample.repository.HouseRespository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,7 +33,6 @@ public class HouseController {
 
 	@Autowired
 	HouseRespository repository;
-
 
 	@RequestMapping(path = "/house", method = RequestMethod.GET)
 	public ResponseEntity<List<House>> getAllHouses() {
@@ -79,7 +79,7 @@ public class HouseController {
 		} catch (JsonParseException e) {
 			log.error("JsonParseException: ", e);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
+			
 			log.error("JsonMappingException: ", e);
 		} catch (IOException e) {
 			log.error("IOException: ", e);
@@ -115,11 +115,20 @@ public class HouseController {
 	private House convertJsonToRooms(String jsonString,
 			ObjectMapper objectMapper) throws IOException, JsonParseException,
 			JsonMappingException {
+		House hse;
 		List<Room> rooms = objectMapper.readValue(
 				jsonString,
 				objectMapper.getTypeFactory().constructCollectionType(
 						List.class, Room.class));
-		House hse = new House(rooms);
+		if (CollectionUtils.isNotEmpty(rooms)) {
+			hse = new House(rooms);
+			if(hse.getNumOfRooms() > 0){
+				hse.setId(rooms.get(0).getHouse().getId());
+			}
+		}else{
+			 hse = new House();
+		}
+		 
 		return hse;
 	}
 

@@ -1,4 +1,4 @@
-package com.uptake.model;
+package com.sample.model;
 
 public enum RoomType {
 	KITCHEN, HALLWAY, BEDROOM, BATHROOM, LAUNDRY;

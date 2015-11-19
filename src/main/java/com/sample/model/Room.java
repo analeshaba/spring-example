@@ -1,4 +1,4 @@
-package com.uptake.model;
+package com.sample.model;
 
 import java.io.Serializable;
 

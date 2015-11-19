@@ -1,4 +1,4 @@
-package com.uptake.model;
+package com.sample.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,6 +59,12 @@ public class House implements Serializable {
 	public long getId(){
 		return this.id;
 	}
+	
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public int getNumOfRooms() {
 			return rooms.size();
 	}

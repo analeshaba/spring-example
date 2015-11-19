@@ -1,4 +1,4 @@
-package com.uptake.model;
+package com.sample.model;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -9,6 +9,10 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import com.sample.model.House;
+import com.sample.model.Room;
+import com.sample.model.RoomType;
 
 public class HouseTest {
 
