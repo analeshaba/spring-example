@@ -43,6 +43,10 @@ DELETE: Delete house # 3
 	http://localhost:8080/house/3
 
 
+UPDATE: Update house # 3
+	http://localhost:8080/house/ 
+	JSON Body: House with bathroom of 5th floor
+	[{"house":5,"type":"BATHROOM","length":6.2,"width":5.0,"floor":5} ]
 
 
 	
