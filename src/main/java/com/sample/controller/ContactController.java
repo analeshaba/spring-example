@@ -1,8 +1,9 @@
 package com.sample.controller;
 
+import java.util.Collections;
 import java.util.List;
 
-import org.h2.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,26 +24,44 @@ import org.springframework.http.ResponseEntity;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("contacts")
 public class ContactController {
 	private static final Logger log = LoggerFactory.getLogger(ContactController.class);
 
 	@Autowired
 	ContactRespository repository;
 
-	@RequestMapping(path = "/contacts", method = RequestMethod.GET)
-	public ResponseEntity<List<Contact>> searchContacts(@RequestParam(value="state", required=false) String state) {
-		log.error("parametersparametersparameters=" , state);
-		List<Contact> contacts = (List<Contact>) repository.findAll();
+	@RequestMapping( method = RequestMethod.GET)
+	public ResponseEntity<List<Contact>> searchContacts(@RequestParam(value="state", required=false, name="state") String state,
+			@RequestParam(value="city", required=false, name="city") String city) {
+		
+		
+		log.debug("parametersparametersparameters state="+state);
+		log.debug("parametersparametersparameters city="+city);
+		
+		List<Contact> contacts = Collections.emptyList();
+		
+		if(StringUtils.isEmpty(city) && StringUtils.isEmpty(state)){
+			  contacts = (List<Contact>) repository.findAll();
+		}else{
+			if(StringUtils.isNotBlank(state)){
+			  contacts.addAll((List<Contact>) repository.findByState(state.toUpperCase()));
+			}
+			if(StringUtils.isNotBlank(city)){
+			contacts.addAll((List<Contact>) repository.findByCity(city.toUpperCase()));
+			}
+		}
+
 		if (Iterables.size(contacts) == 0) {
 			return new ResponseEntity<List<Contact>>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<List<Contact>>(contacts, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/contact/{id}", method = RequestMethod.GET)
+	@RequestMapping(path = "{id}", method = RequestMethod.GET)
 	public ResponseEntity<Contact> getContact(@PathVariable("id") String id) {
 
-		if (StringUtils.isNumber(id)) {
+		if (StringUtils.isNumeric(id)) {
 			Contact contact = repository.findOne(Long.valueOf(id));
 			if (contact != null) {
 				return new ResponseEntity<Contact>(contact, HttpStatus.OK);
@@ -51,9 +70,9 @@ public class ContactController {
 		return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(path = "/contact/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(path = "{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Contact> deleteContact(@PathVariable("id") String id) {
-		if (StringUtils.isNumber(id)) {
+		if (StringUtils.isNumeric(id)) {
 			Contact contact = repository.findOne(Long.valueOf(id));
 			if (contact != null) {
 				repository.delete(contact.getId());
@@ -63,7 +82,7 @@ public class ContactController {
 		return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/contact", method = RequestMethod.POST )
+	@RequestMapping(method = RequestMethod.POST )
 	public ResponseEntity<?> createContact(@Valid @RequestBody Contact contact) {
 		try {
 
@@ -78,7 +97,7 @@ public class ContactController {
 
 	}
 
-	@RequestMapping(value = "/contact", method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<?> updateContact(@Valid @RequestBody Contact contact) {
 
 		try {
