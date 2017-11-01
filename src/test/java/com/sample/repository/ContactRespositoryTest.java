@@ -76,6 +76,7 @@ public class ContactRespositoryTest {
         assertThat(queryResults).extracting(Contact::getCity).containsOnly("New York".toUpperCase());
     }
     
+   
     @Test
     public void testFindByState() {
  

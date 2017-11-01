@@ -28,7 +28,7 @@ import javax.validation.Valid;
 @RestController
 public class ContactController {
 	private static final Logger log = LoggerFactory.getLogger(ContactController.class);
-
+	
 	@Autowired
 	ContactRespository repository;
 
@@ -129,7 +129,7 @@ public class ContactController {
 		}
 		return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
 	}
-
+	
 	@RequestMapping(value = "/contacts",
 			produces = {MediaType.APPLICATION_JSON_VALUE},
 			method = RequestMethod.POST )

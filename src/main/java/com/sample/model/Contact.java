@@ -94,12 +94,12 @@ public class Contact implements Serializable {
 		return company;
 	}
 
-
+	
 	public void setCompany(final String company) {
 		this.company = company;
 	}
 
-
+	
 	public String getImage() {
 		return image;
 	}

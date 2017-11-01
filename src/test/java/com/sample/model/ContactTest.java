@@ -11,7 +11,6 @@ public class ContactTest {
 
 	  @Test
 	  public void createEmptyContact() {
-
 		 Contact contact = new Contact("Test Data");
 		 assertNotNull(contact);
 	  }

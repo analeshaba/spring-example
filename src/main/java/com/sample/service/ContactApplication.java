@@ -79,7 +79,7 @@ public class ContactApplication {
 				
 				log.info("Application started with command-line arguments: {} . \n To kill this application, press Ctrl + C.", Arrays.toString(args));
 				
-
+				
 			};
 	   }
 }
