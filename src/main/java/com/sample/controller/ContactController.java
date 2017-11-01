@@ -36,7 +36,7 @@ public class ContactController {
 	
 	 @RequestMapping("/")
 	 public @ResponseBody String greeting() {
-	        return "Hello World. doc comming";
+	        return "Please look at the README file for more details";
 	 }
 	@RequestMapping(path= "/contacts", 
 			produces = {MediaType.APPLICATION_JSON_VALUE},
