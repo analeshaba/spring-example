@@ -1,5 +1,6 @@
 package com.sample.service;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import org.slf4j.Logger;
@@ -33,45 +34,50 @@ public class ContactApplication {
 		public CommandLineRunner demo(ContactRespository repository) {
 			return (args) -> {
 
-				 Contact contact = new Contact("Contact #1");
+				 Contact contact = new Contact("Sample Contact #1");
 				 contact.setBirthDate(Calendar.getInstance().getTime());
 				 contact.setCompany("ABC Company");
-				 contact.setEmail("a@a.com");
+				 contact.setEmail("a@abc.com");
 				 contact.setPhoneNumber("(773)224-1830");
+				 contact.setAddress("123 N Main Street");
+				 contact.setCity("Chicago");
+				 contact.setState("il");
+				 contact.setCountry("USA");
+				 contact.setPostalCode("60600");
 				 repository.save(contact);
 				 
-				 contact = new Contact("Contact #4");
-				 //contact.setBirthDate(LocalDate.of(2019, Month.DECEMBER, 22));
-				 contact.setCompany("ABC222 Company");
-				 contact.setEmail("a222@a.com");
-				 contact.setPhoneNumber("(837)290-2919");
+				 contact = new Contact("Sample Contact #2");
+				 contact.setBirthDate(Calendar.getInstance().getTime());
+				 contact.setCompany("Tx Company");
+				 contact.setEmail("a@abc.com");
+				 contact.setPhoneNumber("(773)224-1830");
+				 contact.setAddress("123 N Noeth Street");
+				 contact.setCity("Dallax");
+				 contact.setState("TX");
+				 contact.setCountry("USA");
+				 contact.setPostalCode("56050");
 				 repository.save(contact);
 				 
-//			     rooms = new ArrayList<Address>();
-//			   	 rooms.add(new Address(10,12.45,2,RoomType.BATHROOM));
-//			   	 rooms.add(new Address(11,12.45,1, RoomType.BEDROOM));
-//				 hse = new Contact(rooms);
-//				 repository.save(hse );
-//			
-//			     rooms = new ArrayList<Address>();
-//			   	 rooms.add(new Address(10,12.45,2,RoomType.BATHROOM));
-//			   	 rooms.add(new Address(11,12.45,1, RoomType.BEDROOM));
-//				 hse = new Contact(rooms);
-//				 repository.save(hse );
-//				 
-//			     rooms = new ArrayList<Address>();
-//			   	 rooms.add(new Address(10,12.45,2,RoomType.HALLWAY));
-//			   	 rooms.add(new Address(11,12.45,1, RoomType.LAUNDRY));
-//				 rooms.add(new Address(10,12.45,2,RoomType.BATHROOM));
-//			   	 rooms.add(new Address(11,12.45,1, RoomType.BEDROOM));
-//				 hse = new Contact(rooms);
-//				 repository.save(hse);
-				
+
+				 contact = new Contact("Sample Contact #3");
+				 contact.setBirthDate(Calendar.getInstance().getTime());
+				 contact.setCompany("Some Company");
+				 contact.setEmail("a@dcCompanu.com");
+				 contact.setPhoneNumber("(773)224-1830");
+				 contact.setAddress("Happy Way Avenue");
+				 contact.setCity("Washington");
+				 contact.setState("DC");
+				 contact.setCountry("USA");
+				 contact.setPostalCode("56050");
+				 repository.save(contact);
+				 
 				log.debug("Demo Data Loaded");
 				log.debug("-------------------------------");
 				for (Contact n : repository.findAll()) {
 					log.info(n.toString());
 				}
+				
+				log.info("Application started with command-line arguments: {} . \n To kill this application, press Ctrl + C.", Arrays.toString(args));
 				
 
 			};

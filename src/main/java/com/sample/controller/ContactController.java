@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Iterables;
@@ -19,12 +20,12 @@ import com.sample.model.Contact;
 import com.sample.repository.ContactRespository;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("contacts")
 public class ContactController {
 	private static final Logger log = LoggerFactory.getLogger(ContactController.class);
 
@@ -32,7 +33,14 @@ public class ContactController {
 	ContactRespository repository;
 
 	//TODO  API Version, security, monitoring
-	@RequestMapping( method = RequestMethod.GET)
+	
+	 @RequestMapping("/")
+	 public @ResponseBody String greeting() {
+	        return "Hello World. doc comming";
+	 }
+	@RequestMapping(path= "/contacts", 
+			produces = {MediaType.APPLICATION_JSON_VALUE},
+			method = RequestMethod.GET)
 	public ResponseEntity<List<Contact>> searchContacts(
 			@RequestParam(value="email", required=false, name="email") String email,
 			@RequestParam(value="phone", required=false, name="phone") String phone) {
@@ -62,7 +70,9 @@ public class ContactController {
 		return new ResponseEntity<List<Contact>>(contacts, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "{id}", method = RequestMethod.GET)
+	@RequestMapping(path = "/contacts/{id}",
+			produces = {MediaType.APPLICATION_JSON_VALUE},
+			method = RequestMethod.GET)
 	public ResponseEntity<Contact> getContact(@PathVariable("id") String id) {
 
 		if (StringUtils.isNumeric(id)) {
@@ -74,7 +84,9 @@ public class ContactController {
 		return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
 	}
 	
-	@RequestMapping(path = "/state/{state}", method = RequestMethod.GET)
+	@RequestMapping(path = "/contacts/state/{state}",
+			produces = {MediaType.APPLICATION_JSON_VALUE},
+			method = RequestMethod.GET)
 	public ResponseEntity<List<Contact>> getContactByState(@PathVariable("state") String state) {
 		List<Contact> contacts =null;
 		if (StringUtils.isNotBlank(state)) {
@@ -89,7 +101,9 @@ public class ContactController {
 
 
 
-	@RequestMapping(path = "/city/{city}", method = RequestMethod.GET)
+	@RequestMapping(path = "/contacts/city/{city}",
+			produces = {MediaType.APPLICATION_JSON_VALUE},
+			method = RequestMethod.GET)
 	public ResponseEntity<List<Contact>> getContactByCity(@PathVariable("city") String city) {
 		List<Contact> contacts =null;
 		if (StringUtils.isNotBlank(city)) {
@@ -102,7 +116,9 @@ public class ContactController {
 		return new ResponseEntity<List<Contact>>(contacts, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "{id}", method = RequestMethod.DELETE)
+	@RequestMapping(path = "/contacts/{id}", 
+			produces = {MediaType.APPLICATION_JSON_VALUE},
+			method = RequestMethod.DELETE)
 	public ResponseEntity<Contact> deleteContact(@PathVariable("id") String id) {
 		if (StringUtils.isNumeric(id)) {
 			Contact contact = repository.findOne(Long.valueOf(id));
@@ -114,7 +130,9 @@ public class ContactController {
 		return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(method = RequestMethod.POST )
+	@RequestMapping(value = "/contacts",
+			produces = {MediaType.APPLICATION_JSON_VALUE},
+			method = RequestMethod.POST )
 	public ResponseEntity<?> createContact(@Valid @RequestBody Contact contact) {
 		try {
 
@@ -129,7 +147,9 @@ public class ContactController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(value = "/contacts",
+			produces = {MediaType.APPLICATION_JSON_VALUE},
+			method = RequestMethod.PUT)
 	public ResponseEntity<?> updateContact(@Valid @RequestBody Contact contact) {
 
 		try {

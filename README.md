@@ -1,5 +1,5 @@
 # spring-example
-Sample REST API
+Coding Challenge
 
 -------
 
@@ -8,45 +8,96 @@ Generated project characteristics
 -------------------------
 * Spring Boot
  
-Installation
+Build source using maven  
 ------------
 
-To install in your local repository execute following commands:
+To build code locally repository execute following commands:
 
 ```bash
-    git https://github.com/analeshaba/spring-example.git
-    cd spring-example
     mvn clean install
 ```
 
 
 Run the project
 ----------------
- Maven, you can run the application using 
+ After installing  Maven on your server, you can run the application using as Spring Boot applications
 ```bash
 	mvn spring-boot:run
+	For additional details on the spring boot maven plug in see: https://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html
 ```
 
 Test on the API
 -------------------
 Content-Type → application/json;charset=UTF-8
 
-GET : Get a list of all house
-	http://localhost:8080/house - Returns a list of all houses
+GET :  
+	http://localhost:8080/contacts - Returns a list of all contacts
 	
-POST: Create a house
-	http://localhost:8080/house
-	JSON Body: House with bathroom of 5th floor
-	e.g.  [{"house":null,"type":"BATHROOM","length":6.0,"width":5.0,"floor":5} ]
+GET :  
+	http://localhost:8080/contacts/state/{state code} - Returns a list of all contacts for a state
+	e.g. http://localhost:8080/contacts/state/tx - returns all contact for State of Texas
+	
+GET :  
+	http://localhost:8080/contacts/city/{city name} - Returns a list of all contacts for a city	
+	e.g. http://localhost:8080/contacts/city/chicago - returns all contact for City of Chicago 
+	
+GET :  
+	 http://localhost:8080/contacts?email={phone}- Searches for  contact with given phone
+	e.g. http://localhost:8080/contacts?phone=(773)224-1830	
+		
+GET :  
+	 http://localhost:8080/contacts?email={email address}- Searches for  contact with given email	
+	e.g. http://localhost:8080/contacts?email=ASAS@ASAD.NOM 
+		
+POST: Create a contact
+	http://localhost:8080/contacts
+	JSON Body: 
+	{
+	"name": "Contact Nm",
+	"company": "Contact Company",
+	"image": "image URL",
+	"email": "asas@asad.nom",
+	"birthDate": "21/09/1978",
+	"phoneNumber": "(773)224-1830",
+	"address": "123 Main Street",
+	"city": "Chicago",
+	"state": "IL",
+	"postalCode": "60606-1212",
+	"country": "USA"
+	}
 
-DELETE: Delete house # 3
-	http://localhost:8080/house/3
+DELETE: Delete contact # 3
+	http://localhost:8080/contacts/{contact id}
 
 
-UPDATE: Update house # 3
-	http://localhost:8080/house/ 
-	JSON Body: House with bathroom of 5th floor
-	[{"house":5,"type":"BATHROOM","length":6.2,"width":5.0,"floor":5} ]
+PUT: Update contact # 4
+	http://localhost:8080/contacts/ 
+	JSON Body:  
+	{
+	  	"id":4,
+		"name": "Contact Nmewe Update",
+		"company": "Contact Company",
+		"image": "image URL",
+		"email": "asas@asad.nom",
+		"birthDate": "21/09/1978",
+		"phoneNumber": "(773)224-1830",
+		"address": "123 Main Street",
+		"city": "Chicago",
+		"state": "IL",
+		"postalCode": "60606-1212",
+		"country": "USA"
+	}
+
+
+Assumptions
+-------------------
+1.API versioning not currently supported
+2.Client authentication not supported
+3.Data is persisted in a in memory h2 database
+3.Expected phone number format is (NNN)NNN-NNNN
+4.Birth date format is dd/MM/yyyy
+5.endpoints are only exposed over http
+6. The rest service is configured to use a random port
 
 
 	

@@ -66,6 +66,7 @@ public class ContactRespositoryTest {
         assertFalse(queryResults.isEmpty());
         assertThat(queryResults).extracting(Contact::getEmail).containsOnly("contact@chicago.co.uk".toUpperCase());
     }
+    
     @Test
     public void testFindByCity() {
  
