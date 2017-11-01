@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Iterables;
@@ -29,7 +30,8 @@ public class ContactController {
 	ContactRespository repository;
 
 	@RequestMapping(path = "/contacts", method = RequestMethod.GET)
-	public ResponseEntity<List<Contact>> getAllContacts() {
+	public ResponseEntity<List<Contact>> searchContacts(@RequestParam(value="state", required=false) String state) {
+		log.error("parametersparametersparameters=" , state);
 		List<Contact> contacts = (List<Contact>) repository.findAll();
 		if (Iterables.size(contacts) == 0) {
 			return new ResponseEntity<List<Contact>>(HttpStatus.NO_CONTENT);
