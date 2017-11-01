@@ -1,6 +1,6 @@
 package com.sample.controller;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -31,29 +31,33 @@ public class ContactController {
 	@Autowired
 	ContactRespository repository;
 
+	//TODO  API Version, security, monitoring
 	@RequestMapping( method = RequestMethod.GET)
-	public ResponseEntity<List<Contact>> searchContacts(@RequestParam(value="state", required=false, name="state") String state,
-			@RequestParam(value="city", required=false, name="city") String city) {
+	public ResponseEntity<List<Contact>> searchContacts(
+			@RequestParam(value="email", required=false, name="email") String email,
+			@RequestParam(value="phone", required=false, name="phone") String phone) {
 		
 		
-		log.debug("parametersparametersparameters state="+state);
-		log.debug("parametersparametersparameters city="+city);
+		log.debug("parameters email="+email);
+		log.debug("parameters phone="+phone);
 		
-		List<Contact> contacts = Collections.emptyList();
+		List<Contact> contacts = new ArrayList<Contact>();
 		
-		if(StringUtils.isEmpty(city) && StringUtils.isEmpty(state)){
-			  contacts = (List<Contact>) repository.findAll();
+		if(StringUtils.isEmpty(phone) && StringUtils.isEmpty(email)){
+			  contacts = findAllContacts();
 		}else{
-			if(StringUtils.isNotBlank(state)){
-			  contacts.addAll((List<Contact>) repository.findByState(state.toUpperCase()));
+			
+			//TODO remove dups
+			if(StringUtils.isNotBlank(email)){
+			  contacts.addAll((List<Contact>) repository.findByEmail(email.toUpperCase()));
 			}
-			if(StringUtils.isNotBlank(city)){
-			contacts.addAll((List<Contact>) repository.findByCity(city.toUpperCase()));
+			if(StringUtils.isNotBlank(phone)){
+			  contacts.addAll((List<Contact>) repository.findByPhoneNumber(phone.toUpperCase()));
 			}
 		}
 
 		if (Iterables.size(contacts) == 0) {
-			return new ResponseEntity<List<Contact>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<Contact>>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<List<Contact>>(contacts, HttpStatus.OK);
 	}
@@ -68,6 +72,34 @@ public class ContactController {
 			}
 		}
 		return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(path = "/state/{state}", method = RequestMethod.GET)
+	public ResponseEntity<List<Contact>> getContactByState(@PathVariable("state") String state) {
+		List<Contact> contacts =null;
+		if (StringUtils.isNotBlank(state)) {
+			contacts = repository.findByState(state.toUpperCase());
+		}
+			
+		if (Iterables.size(contacts) == 0) {
+			return new ResponseEntity<List<Contact>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Contact>>(contacts, HttpStatus.OK);
+	}
+
+
+
+	@RequestMapping(path = "/city/{city}", method = RequestMethod.GET)
+	public ResponseEntity<List<Contact>> getContactByCity(@PathVariable("city") String city) {
+		List<Contact> contacts =null;
+		if (StringUtils.isNotBlank(city)) {
+			contacts= repository.findByCity(city.toUpperCase());
+		}
+		
+		if (Iterables.size(contacts) == 0) {
+			return new ResponseEntity<List<Contact>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Contact>>(contacts, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "{id}", method = RequestMethod.DELETE)
@@ -112,5 +144,9 @@ public class ContactController {
 			log.error("Exception: ", e);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+	}
+	
+	private List<Contact> findAllContacts() {
+		return (List<Contact>) repository.findAll();
 	}
 }
