@@ -24,6 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import javax.validation.Valid;
+
 @RestController
 public class ContactController {
 	private static final Logger log = LoggerFactory.getLogger(ContactController.class);
@@ -31,7 +33,7 @@ public class ContactController {
 	@Autowired
 	ContactRespository repository;
 
-	@RequestMapping(path = "/contactst", method = RequestMethod.GET)
+	@RequestMapping(path = "/contacts", method = RequestMethod.GET)
 	public ResponseEntity<List<Contact>> getAllContacts() {
 		List<Contact> contacts = (List<Contact>) repository.findAll();
 		if (Iterables.size(contacts) == 0) {
@@ -64,57 +66,53 @@ public class ContactController {
 		return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/contact", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createContact(
-			@RequestBody(required = true) String jsonString) {
-		ObjectMapper objectMapper = new ObjectMapper();
+	@RequestMapping(value = "/contact", method = RequestMethod.POST )
+	public ResponseEntity<?> createContact(@Valid @RequestBody Contact contact) {
+ 
 
 		try {
-			Contact contact = convertJsonToPoJo(jsonString, objectMapper);
+			log.debug("Creating Contact: ", contact);
 			contact = repository.save(contact);
+		
 			return new ResponseEntity<Contact>(contact, HttpStatus.CREATED);
-		} catch (JsonParseException e) {
-			log.error("JsonParseException: ", e);
-		} catch (JsonMappingException e) {
-			
-			log.error("JsonMappingException: ", e);
-		} catch (IOException e) {
+ 
+		} catch (Exception e) {
 			log.error("IOException: ", e);
 		}
 		return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 
 	}
 
-	@RequestMapping(value = "/contact", 
-			       method = RequestMethod.PUT, 
-			       consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateHouse(
-			@RequestBody(required = true) String jsonString) {
-		ObjectMapper objectMapper = new ObjectMapper();
+//	@RequestMapping(value = "/contact", 
+//			       method = RequestMethod.PUT, 
+//			       consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<?> updateHouse(
+//			@RequestBody(required = true) String jsonString) {
+//		ObjectMapper objectMapper = new ObjectMapper();
+//
+//		try {
+//			Contact contact = convertJsonToPoJo(jsonString, objectMapper);
+//			Contact contactOriginal = repository.findOne(contact.getId());
+//			if (contactOriginal != null) {
+//				contact = repository.save(contact);
+//				return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+//			}
+//		} catch (JsonParseException e) {
+//			log.error("JsonParseException: ", e);
+//		} catch (JsonMappingException e) {
+//			log.error("JsonMappingException: ", e);
+//		} catch (IOException e) {
+//			log.error("IOException: ", e);
+//		}
+//		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+//
+//	}
 
-		try {
-			Contact contact = convertJsonToPoJo(jsonString, objectMapper);
-			Contact contactOriginal = repository.findOne(contact.getId());
-			if (contactOriginal != null) {
-				contact = repository.save(contact);
-				return new ResponseEntity<Contact>(contact, HttpStatus.OK);
-			}
-		} catch (JsonParseException e) {
-			log.error("JsonParseException: ", e);
-		} catch (JsonMappingException e) {
-			log.error("JsonMappingException: ", e);
-		} catch (IOException e) {
-			log.error("IOException: ", e);
-		}
-		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-
-	}
-
-	private Contact convertJsonToPoJo(final String jsonString,
-			final ObjectMapper objectMapper) throws IOException, JsonParseException,
-			JsonMappingException {
-		Contact contact = objectMapper.readValue(jsonString, Contact.class);
-		return contact;
-	}
+//	private Contact convertJsonToPoJo(final String jsonString,
+//			final ObjectMapper objectMapper) throws IOException, JsonParseException,
+//			JsonMappingException {
+//		Contact contact = objectMapper.readValue(jsonString, Contact.class);
+//		return contact;
+//	}
 
 }

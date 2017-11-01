@@ -33,24 +33,24 @@ public class ContactRespositoryTest {
     	contact.setState("IL");
     	contact.setCity("Chicago");
     	contact.setEmail("contact@chicago.co.uk");
-    	contact.setPhoneNumber("+44 123 4343");
+    	contact.setPhoneNumber("(904)123-4343");
         entityManager.persist(contact);
         
     	Contact contact2 = new Contact("Jane NY");
     	contact2.setState("NY");
     	contact2.setCity("new york");
     	contact2.setEmail("contact@chicago.com");
-    	contact2.setPhoneNumber("773 838 1937");
+    	contact2.setPhoneNumber("(773)838-1937");
         entityManager.persist(contact2);	
     }
  
     @Test
     public void testFindByPhone() {
  
-    	List<Contact> queryResults = contactRepository.findByPhoneNumber("7738381937");
+    	List<Contact> queryResults = contactRepository.findByPhoneNumber("(773)838-1937");
 
         assertFalse(queryResults.isEmpty());
-        assertThat(queryResults).extracting(Contact::getPhoneNumber).containsOnly("7738381937");
+        assertThat(queryResults).extracting(Contact::getPhoneNumber).containsOnly("(773)838-1937");
     }
     
     @Test

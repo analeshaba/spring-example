@@ -35,17 +35,17 @@ public class ContactApplication {
 			return (args) -> {
 
 				 Contact contact = new Contact("Contact #1");
-				 contact.setBirthDate(LocalDate.of(2014, Month.DECEMBER, 12));
+				 //contact.setBirthDate(LocalDate.of(2014, Month.DECEMBER, 12));
 				 contact.setCompany("ABC Company");
 				 contact.setEmail("a@a.com");
-				 contact.setPhoneNumber("+1-800-call-1234");
+				 contact.setPhoneNumber("(773)224-1830");
 				 repository.save(contact);
 				 
 				 contact = new Contact("Contact #4");
-				 contact.setBirthDate(LocalDate.of(2019, Month.DECEMBER, 22));
+				 //contact.setBirthDate(LocalDate.of(2019, Month.DECEMBER, 22));
 				 contact.setCompany("ABC222 Company");
 				 contact.setEmail("a222@a.com");
-				 contact.setPhoneNumber("+1-800-call-4444");
+				 contact.setPhoneNumber("(837)290-2919");
 				 repository.save(contact);
 				 
 //			     rooms = new ArrayList<Address>();

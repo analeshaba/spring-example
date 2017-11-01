@@ -2,6 +2,7 @@ package com.sample.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 
@@ -23,16 +30,27 @@ public class Contact implements Serializable {
 	private long id;
 	
 	@NotNull
+	@Size(min=2, max=50)
 	private String name;
 	
 	private String company;
 	private String image;
+	
+	@Email
+	@NotEmpty(message = "Please enter your email addresss.")
 	private String email;
-	private LocalDate birthDate;
+	
+	@Past
+	private Date birthDate;
+	
+	@Pattern(regexp="\\(\\d{3}\\)\\d{3}-\\d{4}")
 	private String phoneNumber;
 	private String address;
 	private String city;
+	
+	@Size(min=2, max=2)
 	private String state;
+	
 	private String postalCode;
 	private String country;
 
@@ -97,12 +115,12 @@ public class Contact implements Serializable {
 	}
 
 
-	public LocalDate getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
 
 
-	public void setBirthDate(final LocalDate birthDate) {
+	public void setBirthDate(final Date birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -166,6 +184,9 @@ public class Contact implements Serializable {
 		this.country = country;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Contact [id=" + id + ", name=" + name + " ]";
+	}
 
 }
