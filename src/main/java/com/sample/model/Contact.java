@@ -113,7 +113,7 @@ public class Contact implements Serializable {
 
 
 	public void setPhoneNumber(final String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+		this.phoneNumber = phoneNumber != null ? phoneNumber.replaceAll("\\s", ""):phoneNumber;
 	}
 
 
