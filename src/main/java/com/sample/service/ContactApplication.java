@@ -1,7 +1,6 @@
 package com.sample.service;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.util.Calendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ public class ContactApplication {
 			return (args) -> {
 
 				 Contact contact = new Contact("Contact #1");
-				 //contact.setBirthDate(LocalDate.of(2014, Month.DECEMBER, 12));
+				 contact.setBirthDate(Calendar.getInstance().getTime());
 				 contact.setCompany("ABC Company");
 				 contact.setEmail("a@a.com");
 				 contact.setPhoneNumber("(773)224-1830");

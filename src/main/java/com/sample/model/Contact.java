@@ -1,7 +1,6 @@
 package com.sample.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,6 +15,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 
@@ -38,20 +39,25 @@ public class Contact implements Serializable {
 	
 	@Email
 	@NotEmpty(message = "Please enter your email addresss.")
+	@Pattern(regexp="^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
 	private String email;
 	
 	@Past
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date birthDate;
 	
 	@Pattern(regexp="\\(\\d{3}\\)\\d{3}-\\d{4}")
 	private String phoneNumber;
+	
 	private String address;
 	private String city;
 	
 	@Size(min=2, max=2)
 	private String state;
 	
+	@Pattern(regexp="^\\d{5}(?:[-\\s]\\d{4})?$")
 	private String postalCode;
+	
 	private String country;
 
 

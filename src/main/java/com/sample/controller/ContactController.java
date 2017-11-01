@@ -1,6 +1,5 @@
 package com.sample.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.h2.util.StringUtils;
@@ -13,15 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Iterables;
 import com.sample.model.Contact;
 import com.sample.repository.ContactRespository;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
@@ -68,51 +63,33 @@ public class ContactController {
 
 	@RequestMapping(value = "/contact", method = RequestMethod.POST )
 	public ResponseEntity<?> createContact(@Valid @RequestBody Contact contact) {
- 
-
 		try {
-			log.debug("Creating Contact: ", contact);
+
 			contact = repository.save(contact);
-		
+			log.debug("Creating Contact: ", contact);
 			return new ResponseEntity<Contact>(contact, HttpStatus.CREATED);
  
 		} catch (Exception e) {
-			log.error("IOException: ", e);
+			log.error("Exception: ", e);
 		}
 		return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 
 	}
 
-//	@RequestMapping(value = "/contact", 
-//			       method = RequestMethod.PUT, 
-//			       consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<?> updateHouse(
-//			@RequestBody(required = true) String jsonString) {
-//		ObjectMapper objectMapper = new ObjectMapper();
-//
-//		try {
-//			Contact contact = convertJsonToPoJo(jsonString, objectMapper);
-//			Contact contactOriginal = repository.findOne(contact.getId());
-//			if (contactOriginal != null) {
-//				contact = repository.save(contact);
-//				return new ResponseEntity<Contact>(contact, HttpStatus.OK);
-//			}
-//		} catch (JsonParseException e) {
-//			log.error("JsonParseException: ", e);
-//		} catch (JsonMappingException e) {
-//			log.error("JsonMappingException: ", e);
-//		} catch (IOException e) {
-//			log.error("IOException: ", e);
-//		}
-//		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-//
-//	}
+	@RequestMapping(value = "/contact", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateContact(@Valid @RequestBody Contact contact) {
 
-//	private Contact convertJsonToPoJo(final String jsonString,
-//			final ObjectMapper objectMapper) throws IOException, JsonParseException,
-//			JsonMappingException {
-//		Contact contact = objectMapper.readValue(jsonString, Contact.class);
-//		return contact;
-//	}
-
+		try {
+			Contact contactOriginal = repository.findOne(contact.getId());
+			if (contactOriginal != null) {
+				contact = repository.save(contact);
+				log.debug("Updated Contact: ", contact);
+				return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+			}
+		
+		} catch (Exception e) {
+			log.error("Exception: ", e);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+	}
 }

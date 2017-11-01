@@ -2,6 +2,7 @@ package com.sample.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Before;
@@ -30,17 +31,21 @@ public class ContactRespositoryTest {
     @Before
     public void loadTestData(){
     	Contact contact = new Contact("Jane Doe 1");
+    	contact.setBirthDate(Calendar.getInstance().getTime());
     	contact.setState("IL");
     	contact.setCity("Chicago");
     	contact.setEmail("contact@chicago.co.uk");
+    	contact.setPostalCode("10012");
     	contact.setPhoneNumber("(904)123-4343");
         entityManager.persist(contact);
         
     	Contact contact2 = new Contact("Jane NY");
+    	contact2.setBirthDate(Calendar.getInstance().getTime());
     	contact2.setState("NY");
     	contact2.setCity("new york");
     	contact2.setEmail("contact@chicago.com");
     	contact2.setPhoneNumber("(773)838-1937");
+    	contact2.setPostalCode("60646");
         entityManager.persist(contact2);	
     }
  
