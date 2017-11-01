@@ -97,7 +97,8 @@ Assumptions
 3.Expected phone number format is (NNN)NNN-NNNN
 4.Birth date format is dd/MM/yyyy
 5.endpoints are only exposed over http
-6. The rest service is configured to use a random port
+6. The rest service is configured to use a random port. For the available port on you system please check the log file
+e.g    Tomcat started on port(s): 56497 (http)  OR you can update the application.properties file by setting the server.port property
 
 
 	
