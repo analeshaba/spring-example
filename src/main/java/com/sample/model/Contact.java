@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 
 
@@ -21,7 +22,9 @@ public class Contact implements Serializable {
 	@Column(name = "CONTACT_ID")
 	private long id;
 	
+	@NotNull
 	private String name;
+	
 	private String company;
 	private String image;
 	private String email;

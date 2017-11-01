@@ -26,11 +26,6 @@ public class ContactRespositoryTest {
 
     @Autowired
     private ContactRespository contactRepository;
-
-    
-//	 List<Contact> findByEmail(String email);
-//	 List<Contact> findByPhoneNumber(String phoneNumber);
- 
     
     @Before
     public void loadTestData(){
