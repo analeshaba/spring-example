@@ -13,8 +13,7 @@ Build source using maven
 
 To build code locally extract source code zip, then execute following commands:
 
-```
-    mvn clean install
+```mvn clean install
 ```
 
 
@@ -30,12 +29,15 @@ Assumptions
 -------------------
 1. API versioning not currently supported
 2. Client authentication not supported
-3. Data is persisted in a in memory h2 database
+3. Data is persisted in a in-memory h2 database
 4. Expected phone number format is (NNN)NNN-NNNN
 5. Birth date format is dd/MM/yyyy
-6. endpoints are only exposed over http
-7. The rest service is configured to use a random port. For the available port on you system please check the log file
-e.g    Tomcat started on port(s): 56497 (http)  OR you can update the application.properties file by setting the server.port property
+6. Endpoints are only exposed over http
+7. The rest service is configured to use a random port. For the available port that was available on you system please check the log file
+e.g    Tomcat started on port(s): 56497 (http) 
+
+ OR 
+	you can update the application.properties file by setting the server.port={PORT NUMBER} property
 
 Test on the API
 -------------------
@@ -59,13 +61,13 @@ Content-Type → application/json;charset=UTF-8
 	
 - Searches for  contact with given phone
 
-	 http://localhost:{your port}/contacts?email={phone}
-	 e.g. http://localhost:{your port}/contacts?phone=(773)224-1830	
+	http://localhost:{your port}/contacts?email={phone}
+	e.g. http://localhost:{your port}/contacts?phone=(773)224-1830	
 		
 - Searches for  contact with given email
 
-	*http://localhost:{your port}/contacts?email={email address}*
-	 e.g. http://localhost:{your port}/contacts?email=ASAS@ASAD.NOM 
+	http://localhost:{your port}/contacts?email={email address}
+	e.g. http://localhost:{your port}/contacts?email=ASAS@ASAD.NOM 
 		
 ##POST: 
 - Create a contact
