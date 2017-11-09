@@ -27,6 +27,8 @@ import javax.validation.Valid;
 
 @RestController
 public class ContactController {
+	public static final String DEFAULT_INFO_MESSAGE = "Please look at the README file for more details";
+
 	private static final Logger log = LoggerFactory.getLogger(ContactController.class);
 	
 	@Autowired
@@ -36,7 +38,7 @@ public class ContactController {
 	
 	 @RequestMapping("/")
 	 public @ResponseBody String greeting() {
-	        return "Please look at the README file for more details";
+	        return DEFAULT_INFO_MESSAGE;
 	 }
 	@RequestMapping(path= "/contacts", 
 			produces = {MediaType.APPLICATION_JSON_VALUE},
