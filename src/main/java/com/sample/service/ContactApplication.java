@@ -1,7 +1,9 @@
 package com.sample.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +35,10 @@ public class ContactApplication {
 			return (args) -> {
 
 				 Contact contact = new Contact("Sample Contact #1");
-				 contact.setBirthDate(Calendar.getInstance().getTime());
+				
+				 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				 Date d = sdf.parse("09/11/2017");
+				 contact.setBirthDate(d);
 				 contact.setCompany("ABC Company");
 				 contact.setEmail("a@abc.com");
 				 contact.setPhoneNumber("(773)224-1830");
@@ -45,7 +50,7 @@ public class ContactApplication {
 				 repository.save(contact);
 				 
 				 contact = new Contact("Sample Contact #2");
-				 contact.setBirthDate(Calendar.getInstance().getTime());
+				 contact.setBirthDate(d);
 				 contact.setCompany("Tx Company");
 				 contact.setEmail("a@abc.com");
 				 contact.setPhoneNumber("(773)224-1830");
@@ -58,7 +63,7 @@ public class ContactApplication {
 				 
 
 				 contact = new Contact("Sample Contact #3");
-				 contact.setBirthDate(Calendar.getInstance().getTime());
+				 contact.setBirthDate(d);
 				 contact.setCompany("Some Company");
 				 contact.setEmail("a@dcCompanu.com");
 				 contact.setPhoneNumber("(773)224-1830");
